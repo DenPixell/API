@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Список продуктов</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+    <h2>Список продуктов</h2>
+    <form name="productForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group">
+            <label for="title">Название:</label>
+            <input class="form-control" name="title" />
+        </div>
+        <div class="form-group">
+            <label for="price">Цена:</label>
+            <input class="form-control" name="price" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+            <a id="reset" class="btn btn-sm btn-primary">Сбросить</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Название</th>
+                <th>Цена</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        // Получение всех продуктов
+        function GetProducts() {
+            $.ajax({
+                url: '/products',
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (products) {
+                    var rows = '';
+                    $.each(products, function (index, product) {
+                        // добавляем полученные элементы в таблицу
+                        rows += row(product);
+                    });
+                    $('table tbody').append(rows);
+                },
+            });
+        }
+               
+    </script>
+</body>
+</html>
